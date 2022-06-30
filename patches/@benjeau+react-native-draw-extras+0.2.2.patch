@@ -1,0 +1,50 @@
+diff --git a/node_modules/@benjeau/react-native-draw-extras/src/Button.tsx b/node_modules/@benjeau/react-native-draw-extras/src/Button.tsx
+index 5d69f3a..2a7b6e1 100644
+--- a/node_modules/@benjeau/react-native-draw-extras/src/Button.tsx
++++ b/node_modules/@benjeau/react-native-draw-extras/src/Button.tsx
+@@ -1,5 +1,5 @@
+ import React from 'react';
+-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
++import { TouchableOpacity, StyleProp, StyleSheet, View, ViewStyle, Text } from 'react-native';
+ import { RectButton } from 'react-native-gesture-handler';
+ 
+ import { isBright } from './utils';
+@@ -8,6 +8,7 @@ interface ButtonProps {
+   onPress: () => void;
+   color?: string;
+   style?: StyleProp<ViewStyle>;
++  children: any; // added
+ }
+ 
+ const Button: React.FC<ButtonProps> = ({ children, onPress, color, style }) => {
+@@ -34,7 +35,7 @@ const Button: React.FC<ButtonProps> = ({ children, onPress, color, style }) => {
+ 
+   return (
+     <View style={containerStyle}>
+-      <RectButton
++      <TouchableOpacity
+         onPress={onPress}
+         style={buttonStyle}
+         activeOpacity={0.5}
+@@ -42,7 +43,7 @@ const Button: React.FC<ButtonProps> = ({ children, onPress, color, style }) => {
+         underlayColor={color}
+       >
+         {children}
+-      </RectButton>
++      </TouchableOpacity>
+     </View>
+   );
+ };
+diff --git a/node_modules/@benjeau/react-native-draw-extras/src/brushProperties/BrushProperties.tsx b/node_modules/@benjeau/react-native-draw-extras/src/brushProperties/BrushProperties.tsx
+index 2b09726..8ab86cb 100644
+--- a/node_modules/@benjeau/react-native-draw-extras/src/brushProperties/BrushProperties.tsx
++++ b/node_modules/@benjeau/react-native-draw-extras/src/brushProperties/BrushProperties.tsx
+@@ -141,7 +141,7 @@ const BrushProperties = forwardRef<BrushPropertiesRef, BrushPropertiesProps>(
+             )}
+             {opacity && onOpacityChange && (
+               <Slider
+-                minimumValue={0}
++                minimumValue={0.01}
+                 maximumValue={1}
+                 step={opacityStep}
+                 value={opacity}
