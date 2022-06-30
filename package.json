@@ -1,7 +1,7 @@
 {
   "name": "handwriting",
   "version": "1.0.0",
-  "main": "node_modules/expo/AppEntry.js",
+  "main": "index",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
@@ -10,12 +10,29 @@
     "eject": "expo eject"
   },
   "dependencies": {
-    "expo": "~45.0.0",
-    "expo-status-bar": "~1.3.0",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-native": "0.68.2",
-    "react-native-web": "0.17.7"
+    "@benjeau/react-native-draw": "^0.8.3",
+    "@benjeau/react-native-draw-extras": "^0.2.2",
+    "@expo/webpack-config": "^0.16.25",
+    "@react-native-community/slider": "4.1.12",
+    "@react-navigation/native": "^6.0.6",
+    "@react-navigation/native-stack": "^6.2.5",
+    "axios": "^0.27.2",
+    "expo": "^44.0.6",
+    "expo-av": "~10.2.0",
+    "expo-clipboard": "~2.1.0",
+    "expo-splash-screen": "~0.14.1",
+    "expo-updates": "~0.11.7",
+    "react": "17.0.1",
+    "react-dom": "^17.0.2",
+    "react-native": "0.64.3",
+    "react-native-gesture-handler": "~2.1.0",
+    "react-native-safe-area-context": "3.3.2",
+    "react-native-screens": "~3.10.1",
+    "react-native-svg": "12.1.1",
+    "react-native-unimodules": "~0.15.0",
+    "react-native-view-shot": "3.1.2",
+    "react-native-web": "0.17.1",
+    "sharp-cli": "^2.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
