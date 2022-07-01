@@ -187,7 +187,8 @@ export default () => {
         <StatusBar barStyle="dark-content" />
 
         <TouchableOpacity
-          style={[styles_.button, styles_.radius, styles_.bg_green]}
+          disabled={text.length === 0}
+          style={[styles_.button, styles_.radius, text.length === 0 ? styles_.bg_pink : styles_.bg_green]}
           onPress={handleBackspace}
         >
           <Text darkColor="black" style={styles_.text32}>지우기</Text>
