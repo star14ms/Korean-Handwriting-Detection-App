@@ -85,7 +85,7 @@ export default () => {
     sounds.play('detecting')
     const svg: any = canvasRef.current?.getSvg()
     const isBlank = svg === 
-    '<svg xmlns="http://www.w3.org/2000/svg" width="325" height="325" viewBox="0 0 325 325"></svg>'
+    `<svg xmlns="http://www.w3.org/2000/svg" width="${canvasWidth}" height="${canvasWidth}" viewBox="0 0 ${canvasWidth} ${canvasWidth}"></svg>`
     
     if (isBlank) {
       setText(text => text + ' ')
