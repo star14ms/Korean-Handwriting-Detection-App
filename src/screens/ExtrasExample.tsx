@@ -81,11 +81,20 @@ export default () => {
     }
   };
 
-  const Detect = async () => {
-    setIsDetecting(true)
+  const handleDetect = async () => {
     sounds.play('detecting')
-    const data = Canvas_to_dataURL()
-    await axios.post('http://192.168.35.73:5000/detect', data, {
+    const svg: any = canvasRef.current?.getSvg()
+    const isBlank = svg === 
+    '<svg xmlns="http://www.w3.org/2000/svg" width="325" height="325" viewBox="0 0 325 325"></svg>'
+    
+    if (isBlank) {
+      setText(text => text + ' ')
+      return
+    }
+    
+    setIsDetecting(true)
+    const dataURL = "data:image/svg+xml," + encodeURIComponent(svg).replace(/'/g, '%27').replace(/"/g, '%22')
+    await axios.post('http://192.168.35.73:5000/detect', dataURL, {
         headers: { 
             'Content-Type': 'text/xml'
             // 'Content-Type': 'multipart/form-data'
@@ -93,7 +102,7 @@ export default () => {
     })
     .then(
         (result) => {
-            setText(text => text.trim() + result.data.answer)
+            setText(text => text + result.data.answer.trim())
         },
         (error) => {
             alert('손글씨 인식 서버가 닫힌 듯 하다.')
@@ -102,13 +111,7 @@ export default () => {
     setIsDetecting(false)
   }
 
-  const Canvas_to_dataURL = () => {
-      const svg: any = canvasRef.current?.getSvg()
-      const dataURL = "data:image/svg+xml," + encodeURIComponent(svg).replace(/'/g, '%27').replace(/"/g, '%22')
-      return dataURL
-  }
-
-  const ClearText = () => {
+  const handleBackspace = () => {
     setText((prev) => prev.slice(0, -1))
   }
 
@@ -185,7 +188,7 @@ export default () => {
 
         <TouchableOpacity
           style={[styles_.button, styles_.radius, styles_.bg_green]}
-          onPress={ClearText}
+          onPress={handleBackspace}
         >
           <Text darkColor="black" style={styles_.text32}>지우기</Text>
         </TouchableOpacity>
@@ -193,7 +196,7 @@ export default () => {
         <TouchableOpacity
           disabled={isDetecting}
           style={[styles_.button, styles_.radius, isDetecting ? styles_.bg_pink : styles_.bg_green]}
-          onPress={Detect}
+          onPress={handleDetect}
         >
           <Text darkColor="black" style={styles_.text32}>완료</Text>
         </TouchableOpacity>
