@@ -16,6 +16,9 @@ import * as Clipboard from 'expo-clipboard';
 import Sounds from '../sound'
 
 
+const sounds = new Sounds();
+
+
 export default () => {
   const theme = useTheme();
   const colorScheme = useColorScheme();
@@ -26,7 +29,6 @@ export default () => {
   const [opacity, setOpacity] = useState(1);
   const [tool, setTool] = useState(DrawingTool.Brush);
   const [visibleBrushProperties, setVisibleBrushProperties] = useState(false);
-  const sounds = new Sounds()
   
   const [text, setText] = useState('');
   const [isDetecting, setIsDetecting] = useState(false);
@@ -159,7 +161,6 @@ export default () => {
             //@ts-ignore
             style={[{
               position: 'absolute',
-              bottom: 80,
               left: -containerBorderWidth,
               right: 0,
               padding: 10,
@@ -172,7 +173,7 @@ export default () => {
               borderTopColor: '#ccc',
               opacity: overlayOpacity,
             },
-            Platform.OS === 'android' ? { top: 100 } : { bottom: 80 }
+            Platform.OS === 'android' ? { top: 80 } : { bottom: 80 }
           ]}
           />
         )}

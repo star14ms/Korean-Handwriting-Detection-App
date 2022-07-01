@@ -2,7 +2,8 @@ import { Audio } from "expo-av";
 
 
 export default class Sounds {
-    sounds: {[key: string]: Audio.Sound};
+    sounds: {[key: string]: {object: Audio.Sound, path: string, isPlaying: boolean}};
+    soundPlaying = false
   
     constructor() {
       this.sounds = {}
@@ -10,11 +11,15 @@ export default class Sounds {
     }
     
     load_sounds = async () => {
-      this.sounds.detecting = new Audio.Sound()
-      await this.sounds.detecting.loadAsync(require("../assets/피싱.wav"));
+      this.sounds["detecting"] = {
+        object: new Audio.Sound(),
+        path: "../assets/피싱.wav",
+        isPlaying: false,
+      }
+      await this.sounds["detecting"].object.loadAsync(require("../assets/피싱.wav"));
     }
-    
+
     play = async (sound: string) => {
-      await this.sounds[sound].playAsync();
+      await this.sounds[sound].object.replayAsync();
     };
 }

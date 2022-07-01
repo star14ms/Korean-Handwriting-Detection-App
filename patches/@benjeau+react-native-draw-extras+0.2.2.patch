@@ -35,6 +35,19 @@ index 5d69f3a..2a7b6e1 100644
      </View>
    );
  };
+diff --git a/node_modules/@benjeau/react-native-draw-extras/src/CanvasControls.tsx b/node_modules/@benjeau/react-native-draw-extras/src/CanvasControls.tsx
+index b3a3405..ce4512e 100644
+--- a/node_modules/@benjeau/react-native-draw-extras/src/CanvasControls.tsx
++++ b/node_modules/@benjeau/react-native-draw-extras/src/CanvasControls.tsx
+@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
+     flexDirection: 'row',
+     alignItems: 'center',
+     justifyContent: 'space-between',
+-    marginHorizontal: 15,
++    // marginHorizontal: 15,
+   },
+   buttonsContainer: {
+     flexDirection: 'row',
 diff --git a/node_modules/@benjeau/react-native-draw-extras/src/brushProperties/BrushProperties.tsx b/node_modules/@benjeau/react-native-draw-extras/src/brushProperties/BrushProperties.tsx
 index 2b09726..8ab86cb 100644
 --- a/node_modules/@benjeau/react-native-draw-extras/src/brushProperties/BrushProperties.tsx
