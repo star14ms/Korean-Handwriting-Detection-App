@@ -84,7 +84,7 @@ export default () => {
             name="ExtrasExample"
             component={ExtrasExample}
             // options={{ title: 'Extras Example' }}
-            options={{ title: '한글 손글씨 인식기!' }}
+            options={{ title: '손글씨 인식기!' }}
           />
           {/* <Stack.Screen
             name="CanvasExample"

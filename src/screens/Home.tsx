@@ -41,7 +41,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
       </Button> */}
       <Button onPress={() => navigation.navigate('ExtrasExample')}>
         {/* Example using the extras package */}
-        <Text style={styles.bold}>한글 손글씨 인식기!</Text>
+        <Text style={styles.bold}>손글씨 인식기!</Text>
       </Button>
 
       {/* <Text style={[{ color: theme.colors.text }, styles.title]}>

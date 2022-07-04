@@ -32,6 +32,8 @@ export default () => {
   
   const [text, setText] = useState('');
   const [isDetecting, setIsDetecting] = useState(false);
+  const [candidates, setCandidates] = useState([]);
+  const [candidateIdx, setCandidateIdx] = useState(0);
 
   const chartWidth = Dimensions.get('window').width;
   const containerBorderWidth = 20
@@ -47,14 +49,17 @@ export default () => {
 
 
   const handleUndo = () => {
+    sounds.play('먹기')
     canvasRef.current?.undo();
   };
   
   const handleClear = () => {
+    sounds.play('바람')
     canvasRef.current?.clear();
   };
 
   const handleToggleEraser = () => {
+    sounds.play('undertale_change_color')
     setTool((prev) =>
       prev === DrawingTool.Brush ? DrawingTool.Eraser : DrawingTool.Brush
     );
@@ -82,12 +87,15 @@ export default () => {
   };
 
   const handleDetect = async () => {
-    sounds.play('detecting')
+    sounds.play('피싱')
     const svg: any = canvasRef.current?.getSvg()
     const isBlank = svg === 
     `<svg xmlns="http://www.w3.org/2000/svg" width="${canvasWidth}" height="${canvasWidth}" viewBox="0 0 ${canvasWidth} ${canvasWidth}"></svg>`
     
     if (isBlank) {
+      let _cadinate: any = ['']
+      setCandidates(_cadinate)
+      setCandidateIdx(0)
       setText(text => text + ' ')
       return
     }
@@ -102,7 +110,9 @@ export default () => {
     })
     .then(
         (result) => {
-            setText(text => text + result.data.answer.trim())
+            setCandidates(result.data.answer)
+            setCandidateIdx(0)
+            setText(text => text + result.data.answer[0])
         },
         (error) => {
             alert('손글씨 인식 서버가 닫힌 듯 하다.')
@@ -115,7 +125,18 @@ export default () => {
     setText((prev) => prev.slice(0, -1))
   }
 
+  const handleClearText = () => {
+    setText('')
+  }
+
+  const handleChangeText = () => {
+    sounds.play('쉭')
+    setText(prev => prev.slice(0, -1) + candidates[candidateIdx+1 < candidates.length ? candidateIdx+1 : 0]) 
+    setCandidateIdx(prev => prev+1 < candidates.length ? prev+1 : 0 )
+  }
+
   const copyToClipboard = () => {
+    sounds.play('sans_voice')
     Clipboard.setString(text);
     alert(`${text}\n복사 완료!`)
   }
@@ -189,9 +210,9 @@ export default () => {
         <TouchableOpacity
           disabled={text.length === 0}
           style={[styles_.button, styles_.radius, text.length === 0 ? styles_.bg_pink : styles_.bg_green]}
-          onPress={handleBackspace}
+          onPress={copyToClipboard}
         >
-          <Text darkColor="black" style={styles_.text32}>지우기</Text>
+          <Text darkColor="black" style={styles_.text32}>복사</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -199,7 +220,17 @@ export default () => {
           style={[styles_.button, styles_.radius, isDetecting ? styles_.bg_pink : styles_.bg_green]}
           onPress={handleDetect}
         >
-          <Text darkColor="black" style={styles_.text32}>완료</Text>
+          <Text darkColor="black" style={styles_.text32}>감지</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          disabled={isDetecting || candidates.length <= 1}
+          style={[styles_.button, styles_.radius, 
+            isDetecting || candidates.length <= 1 ? styles_.bg_pink : styles_.bg_green
+          ]}
+          onPress={handleChangeText}
+        >
+          <Text darkColor="black" style={styles_.text32}>교체</Text>
         </TouchableOpacity>
       </View>
       )}
@@ -211,9 +242,10 @@ export default () => {
 
         <TouchableOpacity
           style={[styles_.button, styles_.bg_blue, styles.button_clear]}
-          onPress={copyToClipboard}
+          onPress={handleBackspace}
+          onLongPress={handleClearText}
         >
-          <Text darkColor="black" style={styles_.text24}>복사</Text>
+          <Text darkColor="black" style={styles_.text32}>←</Text>
         </TouchableOpacity>
       </View>
       )}
@@ -258,7 +290,7 @@ const styles_ = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingVertical: '5%',
-    width: '45%',
+    width: '30%',
     backgroundColor: 'lightgreen',
   },
   radius: {
