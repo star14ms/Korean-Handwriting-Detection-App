@@ -34,6 +34,7 @@ export default () => {
   const [isDetecting, setIsDetecting] = useState(false);
   const [candidates, setCandidates] = useState([]);
   const [candidateIdx, setCandidateIdx] = useState(0);
+  const [isBackSpaced, setIsBackSpaced] = useState(false);
 
   const chartWidth = Dimensions.get('window').width;
   const containerBorderWidth = 20
@@ -88,6 +89,7 @@ export default () => {
 
   const handleDetect = async () => {
     sounds.play('피싱')
+    setIsBackSpaced(false)
     const svg: any = canvasRef.current?.getSvg()
     const isBlank = svg === 
     `<svg xmlns="http://www.w3.org/2000/svg" width="${canvasWidth}" height="${canvasWidth}" viewBox="0 0 ${canvasWidth} ${canvasWidth}"></svg>`
@@ -123,6 +125,7 @@ export default () => {
 
   const handleBackspace = () => {
     setText((prev) => prev.slice(0, -1))
+    setIsBackSpaced(true)
   }
 
   const handleClearText = () => {
@@ -131,8 +134,10 @@ export default () => {
 
   const handleChangeText = () => {
     sounds.play('쉭')
-    setText(prev => prev.slice(0, -1) + candidates[candidateIdx+1 < candidates.length ? candidateIdx+1 : 0]) 
+    setText(prev => 
+      (isBackSpaced ? prev : prev.slice(0, -1)) + candidates[candidateIdx+1 < candidates.length ? candidateIdx+1 : 0]) 
     setCandidateIdx(prev => prev+1 < candidates.length ? prev+1 : 0 )
+    setIsBackSpaced(false)
   }
 
   const copyToClipboard = () => {
