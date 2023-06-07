@@ -13,7 +13,7 @@
   "dependencies": {
     "@benjeau/react-native-draw": "^0.8.3",
     "@benjeau/react-native-draw-extras": "^0.2.2",
-    "@expo/webpack-config": "^0.16.25",
+    "@expo/webpack-config": "^18.1.0",
     "@react-native-community/slider": "4.1.12",
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
